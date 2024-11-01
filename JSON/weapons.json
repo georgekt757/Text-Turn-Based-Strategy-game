@@ -1,0 +1,73 @@
+{
+
+"arl":
+
+    {
+        "name":"Assault Rifle",
+        "desc":"The standard Assault Rifle. With its good accuracy and damage, it is highly popular across militaries, mercenaries, PMCs, freelancers, and everyone else in between.",
+        "atk":15,
+        "hitRoll":75,
+        "ammo":24
+    },
+
+"ptl":
+
+    {
+        "name":"Pistol",
+        "desc":"Common amongst civilians, it is mainly used for policing roles and usually not given to militaries. Its near-guaranteed chance for bullets to connect makes up for its low damage.",
+        "atk":8,
+        "hitRoll":98,
+        "ammo":13
+    },
+
+"sgn":
+
+    {
+        "name":"Shotgun",
+        "desc":"Short-range firearm loaded with buckshot rounds. Banned in most places. Deals high damage, though you may experience difficulty hitting with this weapon.",
+        "atk":20,
+        "hitRoll":66,
+        "ammo":5
+    },
+
+"srl":
+
+    {
+        "name":"Sniper Rifle",
+        "desc":"Long-range rifle with medium stopping power, favoured by snipers on a budget. Good damage and excellent accuracy, though it can only chamber one round.",
+        "atk":25,
+        "hitRoll":95,
+        "ammo":2
+    },
+
+"lmg":
+
+    {
+        "name":"Light Machine Gun",
+        "desc":"A high stopping power machine gun barely wieldable by humans, as ordinarily these would be mounted. As such, you aren't likely to hit with this often.",
+        "atk":35,
+        "hitRoll":30,
+        "ammo":150
+    },
+
+"wel":
+
+    {
+        "name":"Welding laser",
+        "desc":"Handheld laser used for welding, typically used by repair drones. Not designed for combat.",
+        "atk":24,
+        "hitRoll":25,
+        "ammo":40
+    },
+
+"dbg":
+
+    {
+        "name":"Debug Gun",
+        "desc":"Gun used in development to skip stuff. Huge damage. Best accuracy. And if you're reading this, you're a dirty cheater.",
+        "atk":999,
+        "hitRoll":100,
+        "ammo":999
+    }
+
+}

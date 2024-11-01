@@ -1,0 +1,38 @@
+{ 
+
+"low":
+
+	{
+		"name":"Light Armour",
+		"desc":"Armour composed of lightweight materials that has a lower initiative penalty (-2) at a cost of defence.",
+		"def":2,
+		"itvPenalty":2
+    },
+
+"med":
+
+	{
+		"name":"Standard Armour",
+		"desc":"Common versatile armour that offers a compromise between protection and initiative (-3).",
+		"def":4,
+		"itvPenalty":3
+	},
+
+"high":
+
+	{
+		"name":"Heavy Armour",
+		"desc":"The protection of heavy armour is unmatched, though its initiative penalty leaves something to be desired (-4).",
+		"def":6,
+		"itvPenalty":4
+	},
+
+"dbg":
+	{
+		"name":"Debug Armour",
+		"desc":"Armour used by me for debugging. If you got this yourself, you either randomly entered a number and got lucky. Or, you've just read what's in core.py.",
+		"def":100,
+		"itvPenalty":-7
+	}
+
+}
