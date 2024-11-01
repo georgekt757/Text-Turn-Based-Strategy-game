@@ -1,16 +1,18 @@
 from json import load
 from random import randint
+
 from combat import combat
 from player import player
 from npc import *
 
 
 class Location:
-    def __init__(self, ID, name, desc, canTalk):
+    def __init__(self, ID, name, desc, canTalk, available):
         self._ID = ID 
         self._name = name
         self._desc = desc
         self._canTalk = canTalk
+        self._available = available
 
         self._contents = None
 
@@ -32,9 +34,14 @@ class Location:
     def get_canTalk(self):
         return self._canTalk
     
+    def set_available(self, available):
+        self._available = available
+    def get_available(self):
+        return self._available
+    
 class Crash_Site(Location):
-    def __init__(self, ID, name, desc, canTalk):
-        super().__init__(ID, name, desc, canTalk)
+    def __init__(self, ID, name, desc, canTalk, available):
+        super().__init__(ID, name, desc, canTalk, available)
         self._prospector_survived = None
 
     def set_prospector_survived(self, prospector_survived):
@@ -46,13 +53,13 @@ class Crash_Site(Location):
         print(f"You arrive at: {self.get_name()}. {self.get_desc()}")
         if stage == 0:
             self._canTalk = True
-            print("\nSome prospectors, showing no respect for this tragedy, are already at the crash site. They've spotted you.")
+            print("Some prospectors, showing no respect for this tragedy, are already at the crash site. They've spotted you.\n")
         elif stage >= 1 and self._prospector_survived:
             self._canTalk = False
-            print("\nThe site is a lot calmer now that the prospectors have moved on.")
+            print("The site is a lot calmer now that the prospectors have moved on.\n")
         elif stage >= 1 and not self._prospector_survived:
             self._canTalk = False
-            print("\nThe corpses of the prospectors lay still.")
+            print("The corpses of the prospectors lay still.\n")
         else:
             self._canTalk = False
             print("")
@@ -108,7 +115,23 @@ class Crash_Site(Location):
                 else:
                     pass
         return self._status
+
+class New_Hope(Location):
+    def __init__(self, ID, name, desc, canTalk, available):
+        super().__init__(ID, name, desc, canTalk, available)
+
+    def enter(self, stage):
+        print(f"You arrive at: {self.get_name()}. {self.get_desc()}")
+        if stage == 1:
+            self._canTalk = True
+            print("You decide to enter The New Hope Central. It's a rather quiet bar, with a band playing smooth jazz and the general atmosphere being calm.")
+            print("Though in town such as this, that shouldn't be of any surprise. The bartender's grin is welcoming, albeit creepy.")
+        
     
 crashsite = Crash_Site(1, "Crash site",
-                    "Crash site of the IPNS Whisper, an ageing Sol-class observation ship.",
-                    False)
+                    "Crash site of the IPNS Whistler, an ageing Sol-class observation ship. Fires can be seen all around the crash site. There were definitely no survivors here.",
+                    False, True)
+
+new_hope = New_Hope(2, "New Hope",
+                    r"A small town with all amenities necessary for its survival, including a bar, named 'The New Hope Central'. ",
+                    False, False)

@@ -15,6 +15,8 @@
   - Nowhere, technically. Initialised location when core_info is declared.
 - 1
   - The Crash Site, the area at which you're supposed to investigate.
+- 2
+  - New Hope, where a bar lies, and where there is a bar, there is a barfight.
 
 ## Stages
 

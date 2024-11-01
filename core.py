@@ -1,7 +1,8 @@
 import json
 from random import randint
+
 from player import player, inv
-from locations import crashsite
+from locations import crashsite, new_hope
 from menu import main_menu
 
 class Core:
@@ -9,7 +10,7 @@ class Core:
         self._state = state # Predetermined strings to tell the top of the loop what state the game is in (in combat, configuration, etc.)
         self._location = location # Integer that'll serve as an ID for the real thing
         # Check Core - State list for further information
-        self._stage = stage # For quest stage. A tree will be necessary to comprehend this. 
+        self._stage = stage # For quest stage. A tree may be necessary to comprehend this. 
     
     def set_state(self, state):
         self._state = state
@@ -32,6 +33,7 @@ def save():
     save_data = {
         "name": player.get_name(),
         "hp": player.get_hp(),
+        "damage": player.get_damage(),
         "wpn": player.get_wpn(),
         "wpnDesc": player.get_wpnDesc(),
         "atk": player.get_atk(),
@@ -41,12 +43,17 @@ def save():
         "itv": player.get_itv(),
         "clipSize": player.get_clipSize(),
         "hitRoll": player.get_hitRoll(),
+        "fireType": player.get_fireType(),
         "count1": inv.get_count1(),
         "count2": inv.get_count2(),
         "count3": inv.get_count3(),
         "location": core_info.get_location(),
         "stage": core_info.get_stage(),
-        "prospectors": crashsite.get_prospector_surived()
+
+        # Location specific data
+        "prospectors": crashsite.get_prospector_surived(),
+
+        "new_hope_available": new_hope.get_available()
     }
 
     try:
@@ -65,6 +72,7 @@ def load():
         save_data = json.load(data)
         player.set_name(save_data["name"])
         player.set_hp(save_data["hp"])
+        player.set_damage(save_data["damage"])
         player.set_wpn(save_data["wpn"])
         player.set_wpnDesc(save_data["wpnDesc"])
         player.set_atk(save_data["atk"])
@@ -74,12 +82,17 @@ def load():
         player.set_itv(save_data["itv"])
         player.set_clipSize(save_data["clipSize"])
         player.set_hitRoll(save_data["hitRoll"])
+        player.set_fireType(save_data["fireType"])
         inv.set_count1(save_data["count1"])
         inv.set_count2(save_data["count2"])
         inv.set_count3(save_data["count3"])
         core_info.set_location(save_data["location"])
         core_info.set_stage(save_data["stage"])
+
+        # Location specific data
         crashsite.set_prospector_survived(save_data["prospectors"])
+
+        new_hope.set_available(save_data["new_hope_available"])
 
     core_info.set_state("idle")
     transit(save_data["location"])
@@ -226,28 +239,57 @@ def init():
             print("Programme caught exception. Try again.")
 
 def transit(target):
-    if core_info.get_location() == 0: # Initialisation
-        print('''You board your ship, a rather large modified fighter...
+    try:
+        if core_info.get_location() == 0: # Initialisation
+            print('''You board your ship, a rather large modified fighter...
 It is capable of going nearly everywhere, and allows you to perform your own analyses of situations without interruption.''')
+        elif core_info.get_location() == 1: # Crash site
+            print("You board your ship and leave the crash site. You can still see the fires...")
+        elif core_info.get_location() == 2:
+            print("You board your fighter and leave New Hope. Such a pleasant town, if only it weren't dragged into this mess...")
 
-    core_info.set_location(target)
-    if target == 1: # Crash site
-        crashsite.enter(core_info.get_stage())
-    
+        core_info.set_location(target)
+        if target == 1: # Crash site
+            crashsite.enter(core_info.get_stage())
+        elif target == 2: # New Hope
+            new_hope.enter(core_info.get_stage())
+    except:
+        print("Your fighter says your coordinates are invalid. Please try again.")
 
 def main_loop():
+    location_list = [crashsite, new_hope]
     running = True
+    choice = None
     while running:
         loop_control = main_menu.main_menu_runtime(core_info.get_location(), core_info.get_stage())
+
         if loop_control == "exit":
             save()
             running = False
         elif loop_control == "new_location":
-            print("You're supposed to go somewhere else, but it hasn't been programmed yet.")
+            print("Where to?: ")
+            for i in range(len(location_list)):
+                if location_list[i].get_available() and location_list[i].get_ID() != core_info.get_location():
+                    print(f"{i + 1}. {location_list[i].get_name()}")
+            print("9. Cancel")
+            try:
+                choice = int(input())
+            except:
+                print("Your input was not an integer. Try again.")
+
+            if choice == 9:
+                print("Aborting transport.")
+            else:
+                transit(choice)
 
         elif loop_control == "advance":
             core_info.set_stage(core_info.get_stage() + 1)
+            player.set_hp(player.get_hp() + 20)
+            player.set_damage(player.get_hp())
             print(f"You have advanced a stage. Good job, {player.get_name()}! Check back at your ship for more info on what to do next.")
+
+            if core_info.get_stage() >= 1:
+                new_hope.set_available(True)
 
         elif loop_control == "player_died":
             msg = "You have been killed."

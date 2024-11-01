@@ -1,5 +1,5 @@
 from player import player, inv
-from locations import crashsite
+from locations import crashsite, new_hope
 
 # from combat import combat ???
 class Menu:
@@ -17,14 +17,19 @@ class Menu:
         self._dialogue_outcome = None
         self._location = ""
         self._location_desc = ""
+        self._scratch = None
 
         self._NO_TALK = "There's nobody here to talk to."
+        self._NEW_LOCATION = "new_location"
 
 
     def location_stage_handling(self, location):
         if location == 1:
             self._location = crashsite.get_name()
             self._location_desc = crashsite.get_desc()
+        elif location == 2:
+            self._location = new_hope.get_name()
+            self._location_desc = new_hope.get_desc()
         else:
             print("Error - Invalid location data")
 
@@ -34,6 +39,8 @@ class Menu:
             self._dialogue_outcome = "goodbye"
         elif location == 1 and crashsite.get_canTalk():
             self._dialogue_outcome = crashsite.initiate_dialogue(stage)
+        else:
+            print("Dialogue has yet to be programmed at that location. Yummers.")
     
     def check_dialogue_outcome(self):
         if self._dialogue_outcome == "goodbye":
@@ -76,6 +83,7 @@ class Menu:
         while self._inFighter:
             print(f"You are at: {self._location}")
             print(self._location_desc)
+            print(f"You have {player.get_damage()}/{player.get_hp()} HP remaining.")
             print("Current objective:")
             if stage == 0:
                 print('''Find out the fate of the Intragalactic Peacekeeping Navy Ship Whistler.
@@ -101,13 +109,24 @@ I've dealt with the prospectors, but have no info on what to do next. Perhaps th
 If there's a bar, that'll be as good a place as any. I could certainly use the drink after this.''')
             
             else:
-                print(" << Nothing. Await further assignment >>")
+                print("<< Nothing. Await further assignment >>")
 
+            print('''Would you like to go elsewhere?
+1. Yes, enter cockpit and input coordinates.
+Anything else - Remain at current location''')
+            try:
+                self._choice = int(input())
+                if self._choice == 1:
+                    return self._NEW_LOCATION
+            except:
+                print("Your input was not an integer. Try again.")
+        
             self._inFighter = False
 
     def main_menu_runtime(self, location, stage):
         self._inMain = True
         self._choice = 0
+        self._scratch = None
 
         self.location_stage_handling(location)
         
@@ -121,16 +140,24 @@ If there's a bar, that'll be as good a place as any. I could certainly use the d
                 return "advance"
             print(self._MAIN)
             self._choice = int(input())
+
             if self._choice == 1:
                 self.dialogue(location, stage)
                 self.check_dialogue_outcome()
+
             elif self._choice == 2:
                 print(f"You point your {player.get_wpn()} at your targets, but shake as you forget your training. You get gunned to death instead.")
                 player.deal_damage(player.get_damage())
+
             elif self._choice == 3:
                 self.inventory()
+
             elif self._choice == 4:
-                self.fighter(stage)
+                self._scratch = self.fighter(stage)
+                if self._scratch == self._NEW_LOCATION:
+                    self._inMain = False
+                    return self._NEW_LOCATION
+
             elif self._choice == 9:
                 self._inMain = False
                 return "exit"

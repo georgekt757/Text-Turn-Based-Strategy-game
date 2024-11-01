@@ -1,6 +1,6 @@
 # Readme
 
-Text TBS version 0.2.1
+Text TBS version 0.3.1
 
 ## How to play
 
@@ -29,6 +29,8 @@ Core gameplay has been inspired by Fallout 1 and 2.
 - w3schools [for also teaching me how to parse JSON into Python](https://www.w3schools.com/python/python_json.asp)
 - GeeksForGeeks [for some additional file handling assistance, with regards to writing to a file for the save method in core.py](https://www.geeksforgeeks.org/writing-to-file-in-python/)
 - ChatGPT did help me with explaining *how* to do things, but not writing any of the code itself unless I've said so otherwise in a comment (And I have only done that once).
+- The users of Stack Overflow for:
+  - [Ceiling division](https://stackoverflow.com/questions/14822184/is-there-a-ceiling-equivalent-of-operator-in-python)
 
 ## Special thanks
 

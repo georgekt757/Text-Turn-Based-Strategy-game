@@ -1,5 +1,6 @@
 from time import sleep
 from random import randint
+
 from player import player
 from npc import *
 
@@ -33,6 +34,7 @@ def combat(list):
     in_combat = True
     died = False
     enemycount = len(fighters) - 1
+    player.set_ammoSpent(0)
     print(f"\n<< Combat initiated, there are {enemycount} target(s)! >>\n")
     sleep(2)
     while in_combat:
@@ -56,39 +58,45 @@ def combat(list):
                     else:
                         print(f"{e.get_name()} missed!")
 
-                elif fighters[i].get_itv() == itv:
+                elif fighters[i].get_itv() == itv: # Player's turn
                     if player.get_damage() <= 0:
                         in_combat = False
                         died = True
                         break
                     
-                    p = fighters[i]
-                    print(f"You have {player.get_damage()} HP left.")
+                    p = list[i]
+                    print(f"You have {player.get_damage()} HP left.\nYou have {player.get_clipSize() - player.get_ammoSpent()} bullet(s) remaining.")
                     print("Select target: ")
                     for j in range(len(fighters)):
                         if fighters[j] != p:
-                            print(f"{j + 1}. {fighters[j].get_name()} - {fighters[j].get_damage()}")
+                            print(f"{j + 1}. {fighters[j].get_name()} - {fighters[j].get_damage()} HP remaining")
                     target = int(input()) - 1
                     
                     e = fighters[target]
 
                     hit = randint(0, 100)
                     
-                    if hit <= player.get_hitRoll():
+                    if player.get_ammoSpent() >= player.get_clipSize():
+                        print(f"You have no ammo left for your {player.get_wpn()}! Reloading!")
+                        player.set_ammoSpent(0)
+                        break
+                    elif hit <= player.get_hitRoll():
                         try:
                             dmg = player.get_atk() // e.get_dfe() + randint(0, player.get_atk() // 3)
                         except:
                             dmg = player.get_atk() + randint(0, player.get_atk() // 3)
+                        player.consume_ammo()
                         print(f"You dealt {dmg} damage using {player.get_wpn()} to {e.get_name()}.")
                         e.deal_damage(dmg)
                         if e.get_damage() <= 0:
                             print(f"{e.get_name()} was killed!")
                             fighters.remove(e)
                     else:
+                        player.consume_ammo()
                         print("You missed!")
                 else:
                     print("Someone fucked up somewhere.")
-                sleep(0.8)
+                sleep(1)
             except:
                 pass
         enemycount = len(fighters) - 1

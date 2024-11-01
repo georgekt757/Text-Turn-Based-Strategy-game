@@ -2,11 +2,23 @@
 
 (DD/MM/YYYY)
 
+## 01/11/2024
+
+### Minor Update - New Month
+
+- Implimented ammunition into [combat](combat.py).
+- Increased time between enemy and player dealing damage by 0.2s to 1s.
+- Reduced the player's starting HP from 50 to 30, but for every stage advancement, player health goes up by 20
+- Created new location - New Hope
+
+To do: Finish off New Hope. This is the part where programming this game (should) become a breeze.
+
 ## 31/10/2024
 
 ### Minor update - Halloween
 
 - Created the fighter method in [the main menu](main.py), where the player is able inspect their objective and where they are in case they're an amnesiac.
+It'll also be useful for going to other places, probably.
 - Edited the prospector's dialogue in [the JSON](JSON/dialogue.json) to make more sense.
 - Increased the chance for the Scrapper Drone to hit from 18% to 30% as it was hitting the player far too little.
 - Fixed a bug that caused the player to transit twice to a location - The transit function was being called twice for some reason.

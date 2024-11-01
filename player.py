@@ -1,4 +1,5 @@
 import json
+from random import randint
 from dataclasses import dataclass
 
 class Player:
@@ -18,6 +19,7 @@ class Player:
         self._ammoSpent = 0
         self._hitRoll = 0
         self._damage = hp
+        self._fireType = ""
 
     def set_name(self, name):
         self._name = name
@@ -82,11 +84,26 @@ class Player:
         self._ammoSpent = ammoSpent
     def get_ammoSpent(self):
         return self._ammoSpent
+    def consume_ammo(self):
+        if self._fireType == "single":
+            self._ammoSpent += 1
+        elif self._fireType == "burst":
+            self._ammoSpent += -(self._clipSize // -randint(2, 5))
+        
+        if self._ammoSpent > self._clipSize:
+            self._ammoSpent = self._clipSize
+        elif self._ammoSpent < 0:
+            self._ammoSpent = 0
     
     def set_hitRoll(self, hitRoll):
         self._hitRoll = hitRoll
     def get_hitRoll(self):
         return self._hitRoll
+    
+    def set_fireType(self, fireType):
+        self._fireType = fireType
+    def get_fireType(self):
+        return self._fireType
     
     def set_damage(self, damage):
         self._damage = damage
@@ -115,6 +132,7 @@ class Player:
         self.set_atk(self._contents[wpn]["atk"])
         self.set_clipSize(self._contents[wpn]["ammo"])
         self.set_hitRoll(self._contents[wpn]["hitRoll"])
+        self._fireType = self._contents[wpn]["fireType"]
 
 @dataclass
 class Inventory:
@@ -171,7 +189,7 @@ def init():
 
 inv = init()
 
-player = Player(None, 50, 
+player = Player(None, 30, 
                 None, "You have no weapon equipped!", 0, 
                 None, "You have no armour equipped!", 0, 
                 13)
