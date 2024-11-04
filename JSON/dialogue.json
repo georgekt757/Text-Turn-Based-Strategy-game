@@ -7,5 +7,16 @@
         "roll_fail":"And lose out on all this bob? I don't think so!",
         "roll_pass":"...Fine. We'll move on, but we won't forget this, you hear?!",
         "generic":"So, remind me, why are you here?!"
+    },
+
+    "new_hope_bartender":
+    {
+        "greeting":"Welcome to the New Hope Central, where this fine establishment is ran by yours truly. What'll it be?",
+        "serve":"One ultrafiltered beer coming up. (He pours your drink).",
+        "info1":"Information? Information on what?",
+        "info2":"Oh, I heard about that. Terrible thing, truly. Sorry, I deal in drinks, not in specifications on how to safely retrieve black box data from a shitload of fires.",
+        "info3":"They did not, I'm afraid. But those peeps over there might know a thing or two. I heard them talking about doing just that. Go ask them, maybe.",
+
+        "generic":"Yo buddy. Still alive?"
     }
 }

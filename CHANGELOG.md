@@ -2,6 +2,14 @@
 
 (DD/MM/YYYY)
 
+## XX/11/2024
+
+### Major Update - New Hope and QoL changes
+
+- Tweaked the save/load options so that they are separate.
+- Removed the `Attack` option in the main menu as it has been rendered obsolete, for now at least.
+Until a day comes where I decide to make it useful again, it has been commented out.
+
 ## 01/11/2024
 
 ### Minor Update - New Month

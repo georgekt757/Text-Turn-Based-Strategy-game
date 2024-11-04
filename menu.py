@@ -6,10 +6,10 @@ class Menu:
     def __init__(self):
         self._MAIN = '''What would you like to do?:
     1. Talk
-    2. Attack
-    3. Open inventory
-    4. Board fighter
-    9. Save and exit
+    2. Open inventory
+    3. Board fighter
+    8. Save
+    99. Exit game
 '''
         self._inMain = True
         self._inInv = False
@@ -17,7 +17,7 @@ class Menu:
         self._dialogue_outcome = None
         self._location = ""
         self._location_desc = ""
-        self._scratch = None
+        self._temp = None
 
         self._NO_TALK = "There's nobody here to talk to."
         self._NEW_LOCATION = "new_location"
@@ -39,6 +39,11 @@ class Menu:
             self._dialogue_outcome = "goodbye"
         elif location == 1 and crashsite.get_canTalk():
             self._dialogue_outcome = crashsite.initiate_dialogue(stage)
+
+        elif location == 2 and not new_hope.get_canTalk():
+            print(self._NO_TALK)
+        elif location == 2 and new_hope.get_canTalk():
+            self._dialogue_outcome = new_hope.initiate_dialogue(stage)
         else:
             print("Dialogue has yet to be programmed at that location. Yummers.")
     
@@ -126,7 +131,7 @@ Anything else - Remain at current location''')
     def main_menu_runtime(self, location, stage):
         self._inMain = True
         self._choice = 0
-        self._scratch = None
+        self._temp = None
 
         self.location_stage_handling(location)
         
@@ -141,26 +146,35 @@ Anything else - Remain at current location''')
             print(self._MAIN)
             self._choice = int(input())
 
-            if self._choice == 1:
-                self.dialogue(location, stage)
-                self.check_dialogue_outcome()
+            try:
 
-            elif self._choice == 2:
-                print(f"You point your {player.get_wpn()} at your targets, but shake as you forget your training. You get gunned to death instead.")
-                player.deal_damage(player.get_damage())
+                if self._choice == 1:
+                    self.dialogue(location, stage)
+                    self.check_dialogue_outcome()
 
-            elif self._choice == 3:
-                self.inventory()
+                # elif self._choice == 2:
+                #     print(f"You point your {player.get_wpn()} at your targets, but shake as you forget your training. You get gunned to death instead.")
+                #     player.deal_damage(player.get_damage())
 
-            elif self._choice == 4:
-                self._scratch = self.fighter(stage)
-                if self._scratch == self._NEW_LOCATION:
+                elif self._choice == 2:
+                    self.inventory()
+
+                elif self._choice == 3:
+                    self._temp = self.fighter(stage)
+                    if self._temp == self._NEW_LOCATION:
+                        self._inMain = False
+                        return self._NEW_LOCATION
+                    
+
+                elif self._choice == 8:
                     self._inMain = False
-                    return self._NEW_LOCATION
+                    return "save"
 
-            elif self._choice == 9:
-                self._inMain = False
-                return "exit"
+                elif self._choice == 99:
+                    self._inMain = False
+                    return "exit"
             
+            except:
+                print("Your input wasn't an integer. Try again.")
 
 main_menu = Menu()

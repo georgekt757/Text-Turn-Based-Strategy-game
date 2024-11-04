@@ -53,7 +53,8 @@ def save():
         # Location specific data
         "prospectors": crashsite.get_prospector_surived(),
 
-        "new_hope_available": new_hope.get_available()
+        "new_hope_available": new_hope.get_available(),
+        "new_hope_bartender_convinced": new_hope.get_convinced()
     }
 
     try:
@@ -93,6 +94,8 @@ def load():
         crashsite.set_prospector_survived(save_data["prospectors"])
 
         new_hope.set_available(save_data["new_hope_available"])
+        new_hope.set_convinced(save_data["new_hope_bartender_convinced"])
+
 
     core_info.set_state("idle")
     transit(save_data["location"])
@@ -264,8 +267,12 @@ def main_loop():
         loop_control = main_menu.main_menu_runtime(core_info.get_location(), core_info.get_stage())
 
         if loop_control == "exit":
-            save()
             running = False
+            print("Thank you for playing. Have a nice day.")
+
+        elif loop_control == "save":
+            save()
+
         elif loop_control == "new_location":
             print("Where to?: ")
             for i in range(len(location_list)):
