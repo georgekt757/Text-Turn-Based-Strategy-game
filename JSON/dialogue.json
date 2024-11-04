@@ -1,5 +1,6 @@
 {
     "prospectors":
+
     {
         "greeting":"Hey, this is our find! You want salvage, go somewhere else!",
         "angry":"Listen, I get we're not supposed to be here. But when an IPF vessel crash lands on this poor colony, well, there are some opportunities you can't miss.",
@@ -10,6 +11,7 @@
     },
 
     "new_hope_bartender":
+
     {
         "greeting":"Welcome to the New Hope Central, where this fine establishment is ran by yours truly. What'll it be?",
         "serve":"One ultrafiltered beer coming up. (He pours your drink).",
@@ -17,6 +19,26 @@
         "info2":"Oh, I heard about that. Terrible thing, truly. Sorry, I deal in drinks, not in specifications on how to safely retrieve black box data from a shitload of fires.",
         "info3":"They did not, I'm afraid. But those peeps over there might know a thing or two. I heard them talking about doing just that. Go ask them, maybe.",
 
+        "grateful1":"...Is it over? What on Salvation just happened?!",
+        "grateful2":"Looting off the dead is sick. I am glad you took care of them. Consider yourself welcome at the New Hope Central any time you feel like coming around here.",
+        "grateful3":"You might wanna take that black box of his corpse. Looks like it'll be useful.",
+
         "generic":"Yo buddy. Still alive?"
+    },
+
+    "new_hope_prospectors":
+
+    {
+        "greeting":"(He groans) Leave me alone, unless you wanna grab me another shot...",
+        "distrustful1":"And you're that arsehole who kicked us out of that crash site! What the bloody hell do you want with us now?!",
+        "distrustful_fail":"Go to hell! (Sensing the oncoming battle, the bartender and other patrons head for cover or flee the building).",
+        "distrustful_pass":"Well, you've already taken the site for yourself, what more do you want with us then, hmm?",
+        "distrustful2":"HEY, IT'S CALLED PROSPECTING, NOT-",
+        "distrustful3":"...",
+        "distrustful4":"While we were there, we were able to nag the ship's black box. Take it, all yours, no value in it whatsoever...",
+        "distrustful5":"No worries. And... Sorry for trying to loot the site so soon.",
+
+        "vengeful":"And you're that arsehole who killed my buddies! Get 'em, drone! (Sensing the oncoming battle, the bartender and other patrons head for cover or flee the building)"
     }
+
 }

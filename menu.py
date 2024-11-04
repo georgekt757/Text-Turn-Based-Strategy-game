@@ -45,7 +45,7 @@ class Menu:
         elif location == 2 and new_hope.get_canTalk():
             self._dialogue_outcome = new_hope.initiate_dialogue(stage)
         else:
-            print("Dialogue has yet to be programmed at that location. Yummers.")
+            print("Dialogue has yet to be programmed at that location.")
     
     def check_dialogue_outcome(self):
         if self._dialogue_outcome == "goodbye":
@@ -113,6 +113,24 @@ If there's a bar, that'll be as good a place as any. I could certainly use the d
 I've dealt with the prospectors, but have no info on what to do next. Perhaps the denizens of New Hope will have more information for me.
 If there's a bar, that'll be as good a place as any. I could certainly use the drink after this.''')
             
+            elif stage == 2 and new_hope.get_prospector_surived():
+                print('''Find someone who can decode black box data.
+                      
+The prospectors have very kindly given me the black box they must've skilfully removed from the crash site, what with the fires and all, but I have no way to read it due to the unusually heavy encryption.
+The bartender could know of someone who can do this for me. If he doesn't know anyone, this will make my assignment considerably more difficult.''')
+            
+            elif stage == 2 and not new_hope.get_prospector_surived() and not crashsite.get_prospector_surived():
+                print('''Find someone who can decode black box data.
+                      
+As per the bartender's suggestion, I picked up the black box from Bolt's corpse. He must've been there but got away from the crash site when I started shooting. Coward.
+The bartender could know of someone who can do this for me. If he doesn't know anyone, this will make my assignment considerably more difficult.''')
+                
+            elif stage == 2 and not new_hope.get_prospector_surived() and crashsite.get_prospector_surived():
+                print('''Find someone who can decode black box data.
+                      
+As per the bartender's suggestion, I picked up the black box from Bolt's corpse. He must've been at the crash site but left earlier. Shame I had to kill him.
+The bartender could know of someone who can do this for me. If he doesn't know anyone, this will make my assignment considerably more difficult.''')
+
             else:
                 print("<< Nothing. Await further assignment >>")
 

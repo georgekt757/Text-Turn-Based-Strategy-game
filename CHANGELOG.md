@@ -2,13 +2,20 @@
 
 (DD/MM/YYYY)
 
-## XX/11/2024
+## 04/11/2024
 
 ### Major Update - New Hope and QoL changes
 
+- Finished New Hope, it is now fully functional and complete with dialogue.
+  - Two new NPCs, Bolt and another Scrapper Drone.
+  - Dialogue is a bit more complex here:
+    - You talk to two groups of NPCs, one you can fight too.
+    - The outcome of the crash site affects dialogue here... Choose wisely.
 - Tweaked the save/load options so that they are separate.
 - Removed the `Attack` option in the main menu as it has been rendered obsolete, for now at least.
 Until a day comes where I decide to make it useful again, it has been commented out.
+- Tweaked NPC initiative so that it may never fall below 1.
+- Created the next stage - Find who can decode a black box
 
 ## 01/11/2024
 

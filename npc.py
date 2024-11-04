@@ -41,8 +41,8 @@ class NPC:
         return self._dfe
 
     def set_itv(self, itv):
-        if itv < 0:
-            itv = 0
+        if itv < 1:
+            itv = 1
         elif itv > 20:
             itv = 20
         self._itv = itv
@@ -97,6 +97,15 @@ p_lisa = NPC("Lisa", 8,
 
 p_sbot = NPC("Scrapper Drone", 30,
             weap["wel"]["name"], weap["wel"]["atk"],
-            prot["med"]["def"], randint(0, 20),
+            prot["med"]["def"], randint(1, 20),
             weap["wel"]["ammo"], weap["wel"]["hitRoll"])
 
+nh_bolt = NPC("Bolt", 20,
+            weap["sgn"]["name"], weap["sgn"]["atk"],
+            prot["high"]["def"], 1,
+            weap["sgn"]["ammo"], weap["sgn"]["hitRoll"])
+
+nh_sbot = NPC("Scrapper Drone", 30,
+            weap["wel"]["name"], weap["wel"]["atk"],
+            prot["med"]["def"], randint(1, 20),
+            weap["wel"]["ammo"], weap["wel"]["hitRoll"])

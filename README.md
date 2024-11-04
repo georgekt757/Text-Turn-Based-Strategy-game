@@ -1,6 +1,6 @@
 # Readme
 
-Text TBS version 0.3.1
+Text TBS version v0.4.1
 
 ## How to play
 
@@ -10,7 +10,7 @@ I wouldn't recommend straight running the file by double clicking it as that wou
 if the programme
 abruptly stops running (which it will if you die for whatever reason).
 
-\**If, for whatever reason, think you may be missing those modules, they are **time** and **json**
+\**If, for whatever reason, think you may be missing those modules, they are **random**, **time** and **json**
 (Though I would not worry as these come preinstalled when you download Python for the first time).*
 
 ## Statement of Intent

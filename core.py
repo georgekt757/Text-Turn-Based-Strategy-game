@@ -54,7 +54,8 @@ def save():
         "prospectors": crashsite.get_prospector_surived(),
 
         "new_hope_available": new_hope.get_available(),
-        "new_hope_bartender_convinced": new_hope.get_convinced()
+        "new_hope_bartender_convinced": new_hope.get_convinced(),
+        "new_hope_prospector_survived": new_hope.get_prospector_surived()
     }
 
     try:
@@ -95,6 +96,7 @@ def load():
 
         new_hope.set_available(save_data["new_hope_available"])
         new_hope.set_convinced(save_data["new_hope_bartender_convinced"])
+        new_hope.set_prospector_survived(save_data["new_hope_prospector_survived"])
 
 
     core_info.set_state("idle")

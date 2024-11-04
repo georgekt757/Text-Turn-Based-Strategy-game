@@ -55,12 +55,15 @@ class Crash_Site(Location):
         if stage == 0:
             self._canTalk = True
             print("Some prospectors, showing no respect for this tragedy, are already at the crash site. They've spotted you.\n")
-        elif stage >= 1 and self._prospector_survived:
+        elif stage == 1 and self._prospector_survived:
             self._canTalk = False
             print("The site is a lot calmer now that the prospectors have moved on.\n")
-        elif stage >= 1 and not self._prospector_survived:
+        elif stage == 1 and not self._prospector_survived:
             self._canTalk = False
             print("The corpses of the prospectors lay still.\n")
+        elif stage >= 2:
+            self._canTalk = True
+
         else:
             self._canTalk = False
             print("")
@@ -122,12 +125,18 @@ class New_Hope(Location):
         super().__init__(ID, name, desc, canTalk, available)
 
         self._convinced = False
+        self._prospector_survived = None
         # If the bartender is convinced of your trustworthiness, this will be true.
     
     def set_convinced(self, convinced):
         self._convinced = convinced
     def get_convinced(self):
         return self._convinced
+    
+    def set_prospector_survived(self, prospector_survived):
+        self._prospector_survived = prospector_survived
+    def get_prospector_surived(self):
+        return self._prospector_survived
 
     def enter(self, stage):
         print(f"You arrive at: {self.get_name()}. {self.get_desc()}")
@@ -163,7 +172,7 @@ class New_Hope(Location):
                 sleep(3.0)
                 print(self._contents["new_hope_bartender"]["info2"])
                 sleep(3.0)
-                print("Really? Is there nothing else you can tell me about what may have happened? Did any survivers not come through here?")
+                print("Really? Is there nothing else you can tell me about what may have happened? Did any survivors not come through here?")
                 sleep(3.0)
                 print(self._contents["new_hope_bartender"]["info3"])
                 sleep(3.0)
@@ -172,11 +181,91 @@ class New_Hope(Location):
                 self._running = False
                 self._status = "goodbye"
         
-        elif stage <= 1 and self._convinced:
-            print("Hi. I'm a prospector. I prospect. Wowza.")
-            self._running = False
-            self._status = "goodbye"
-        
+        elif stage <= 1 and self._convinced and crashsite.get_prospector_surived():
+            print(self._contents["new_hope_prospectors"]["greeting"])
+            while self._running:
+                self._choice = int(input('''
+    1. Hey, you're with those guys I met at the crash site!
+    2. Oh Christ, not you people again...
+'''))
+                if self._choice == 1 or self._choice == 2:
+                    print(self._contents["new_hope_prospectors"]["distrustful1"])
+                    self._choice = int(input('''
+    1. [ROLL] No quarrel, honest! I would just like to know why you were there, or if you happen to know anything about the crash.
+    2. I should've killed you while I was there!
+'''))
+                    if self._choice == 1:
+                        self._roll = randint(0, 10)
+                        if self._roll >= 4:
+                            print(self._contents["new_hope_prospectors"]["distrustful_pass"])
+                            sleep(3.0)
+                            print("No! I've been paid to investigate why this had happened, not because I wish to salvage.")
+                            sleep(3.0)
+                            print(self._contents["new_hope_prospectors"]["distrustful2"])
+                            sleep(3.0)
+                            print(self._contents["new_hope_prospectors"]["distrustful3"])
+                            sleep(3.0)
+                            print(self._contents["new_hope_prospectors"]["distrustful4"])
+                            sleep(3.0)
+                            print("Thank you. This helps out massively.")
+                            sleep(3.0)
+                            print(self._contents["new_hope_prospectors"]["distrustful5"])
+                            sleep(3.0)
+                            print("I forgive you.")
+                            sleep(3.0)
+                            self._prospector_survived = True
+                            self._status = "resolved"
+                            self._running = False
+                        
+                        else:
+                            print("I'm not telling you squat.")
+                    
+                    if self._choice == 2 or self._roll < 4:
+
+                        print(self._contents["new_hope_prospectors"]["distrustful_fail"])
+                        self._status = combat([player, nh_bolt, nh_sbot, p_bob, p_lisa, p_sbot])
+                        if self._status == "player_died":
+                            self._running = False
+                        elif self._status == "victory":
+                            self._prospector_survived = False
+                            self._status = "resolved"
+
+                            print(self._contents["new_hope_bartender"]["grateful1"])
+                            sleep(3.0)
+                            print("I don't know if those salvagers were responsible for the crash, but they are responsible for looting it.")
+                            sleep(3.0)
+                            print(self._contents["new_hope_bartender"]["grateful2"])
+                            sleep(3.0)
+                            print(self._contents["new_hope_bartender"]["grateful3"])
+                            sleep(3.0)
+                            self._running = False
+
+
+        elif stage <= 1 and self._convinced and not crashsite.get_prospector_surived():
+            print(self._contents["new_hope_prospectors"]["greeting"])
+            while self._running:
+                sleep(3.0)
+                print("Hey, you're with those guys I killed at the crash site!")
+                sleep(3.0)
+                print(self._contents["new_hope_prospectors"]["vengeful"])
+                sleep(3)
+                self._status = combat([player, nh_bolt, nh_sbot])
+                if self._status == "player_died":
+                    self._running = False
+                elif self._status == "victory":
+                    self._prospector_survived = False
+                    self._status = "resolved"
+
+                    print(self._contents["new_hope_bartender"]["grateful1"])
+                    sleep(3.0)
+                    print("I don't know if those salvagers were responsible for the crash, but they are responsible for looting it.")
+                    sleep(3.0)
+                    print(self._contents["new_hope_bartender"]["grateful2"])
+                    sleep(3.0)
+                    print(self._contents["new_hope_bartender"]["grateful3"])
+                    sleep(3.0)
+                    self._running = False
+
         elif stage >= 2:
             print(self._contents["new_hope_bartender"]["generic"])
             self._running = False
