@@ -1,7 +1,6 @@
 from player import player, inv
 from locations import crashsite, new_hope
 
-# from combat import combat ???
 class Menu:
     def __init__(self):
         self._MAIN = '''What would you like to do?:
@@ -50,10 +49,13 @@ class Menu:
     def check_dialogue_outcome(self):
         if self._dialogue_outcome == "goodbye":
             pass
+
         elif self._dialogue_outcome == "resolved":
             self._dialogue_outcome = "advance"
+
         elif self._dialogue_outcome == "placeholder":
             print("Still under construction. Whoops!")
+
         else:
             # print("Summin ain't right.")
             pass
@@ -62,6 +64,7 @@ class Menu:
     def inventory(self):
         self._inInv = True
         while self._inInv:
+
             print(f'''\n{player.get_wpn()} - {player.get_wpnDesc()} It deals {player.get_atk()} damage and holds {player.get_clipSize()} bullets.
 {player.get_amr()} - {player.get_amrDesc()} It provides {player.get_dfe()} points of protection.
 {inv.get_SLOT1()} - {inv.get_DESC1()} You have {inv.get_count1()}.
@@ -117,19 +120,19 @@ If there's a bar, that'll be as good a place as any. I could certainly use the d
                 print('''Find someone who can decode black box data.
                       
 The prospectors have very kindly given me the black box they must've skilfully removed from the crash site, what with the fires and all, but I have no way to read it due to the unusually heavy encryption.
-The bartender could know of someone who can do this for me. If he doesn't know anyone, this will make my assignment considerably more difficult.''')
+Bolt suggested I go to the IPF to decode this data. Better than risking my life doing it through... Less legitimate means.''')
             
             elif stage == 2 and not new_hope.get_prospector_surived() and not crashsite.get_prospector_surived():
                 print('''Find someone who can decode black box data.
                       
 As per the bartender's suggestion, I picked up the black box from Bolt's corpse. He must've been there but got away from the crash site when I started shooting. Coward.
-The bartender could know of someone who can do this for me. If he doesn't know anyone, this will make my assignment considerably more difficult.''')
+The bartender suggested I go to the IPF to decode this data. Better than risking my life doing it through... Less legitimate means.''')
                 
             elif stage == 2 and not new_hope.get_prospector_surived() and crashsite.get_prospector_surived():
                 print('''Find someone who can decode black box data.
                       
 As per the bartender's suggestion, I picked up the black box from Bolt's corpse. He must've been at the crash site but left earlier. Shame I had to kill him.
-The bartender could know of someone who can do this for me. If he doesn't know anyone, this will make my assignment considerably more difficult.''')
+Bolt suggested I go to the IPF to decode this data. Better than risking my life doing it through... Less legitimate means.''')
 
             else:
                 print("<< Nothing. Await further assignment >>")
@@ -183,7 +186,6 @@ Anything else - Remain at current location''')
                         self._inMain = False
                         return self._NEW_LOCATION
                     
-
                 elif self._choice == 8:
                     self._inMain = False
                     return "save"

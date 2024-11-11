@@ -2,6 +2,18 @@
 
 (DD/MM/YYYY)
 
+## 11/11/2024
+
+### Minor update - Perks
+
+- Added a perk method to [core.py](core.py), where every 2 stages will grant a perk that will increase an attribute, with the choices being:
+  - Attack by 3 points
+  - Accuracy by 5 points
+  - Defense by 1 point
+  - Initiative by 2 points
+- Tweaked some of [Bolt's and the Bartender's dialogue](JSON/dialogue.json) to better fit the next stage.
+- Removed a handful of unecessary whitespace, and added some where it was needed.
+
 ## 04/11/2024
 
 ### Major Update - New Hope and QoL changes

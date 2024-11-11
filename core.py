@@ -62,6 +62,7 @@ def save():
         with open(f'{player.get_name()}_data.json','w') as data:
             data.write(json.dumps(save_data))
         print("Saved to this directory successfuly. You may move the file wherever you want.")
+        
     except:
         rename = int(input("\n\nYour data could not be saved. If your name has special characters that messes with Windows's file management, you can change it now and save again. Would you like to?\n1. Yes\nInput anything else to pass.\n"))
         if rename == 1:
@@ -153,6 +154,7 @@ Do you take the roll... Or not?
     1. Yes
     2. No
               ''')
+        
         try: 
             choice = int(input())
             if choice == 1:
@@ -162,11 +164,11 @@ Do you take the roll... Or not?
                 if (player.get_itv() + a) <= 0:
                     print("Your initiative is now 0. Have fun!")
                 elif player.get_itv() > player.get_itv() + a:
-                    print("Looks like your initiative went down. Oh well. Especially considering you cannot change this mid-game.")
+                    print("Looks like your initiative went down. Oh well. Especially considering you have few opportunities to change this mid-game.")
                 elif player.get_itv() < player.get_itv() + a:
-                    print("Well, looks like fortune favours you as your initiative went up! Even better, this can't be changed mid-game, so no more penalties for you!")
+                    print("Well, looks like fortune favours you as your initiative went up! Even better, this can't be lowered mid-game, so no more penalties for you!")
                 else:
-                    print("No change in initiative score. Consider yourself lucky - Especially considering initiative cannot be changed.")
+                    print("No change in initiative score. Consider yourself lucky - Especially considering initiative cannot be changed often.")
                 player.set_itv(player.get_itv() + a)
                 print(f"Your new initiative is {player.get_itv()}.")
                 done = True
@@ -190,6 +192,7 @@ It should go without saying that these are highly important, just as much as arm
             4. Sniper Rifle - Great damage, exceptional accuracy, poor magazine size
             5. Light Machine Gun - Exceptional damage and magazine size, poor accuracy
             ''')
+        
         try:
             choice = int(input())
             if choice == 1:
@@ -206,7 +209,6 @@ It should go without saying that these are highly important, just as much as arm
                 player.change_wpn("dbg")
             else:
                 print("Went out of range, buddy. Try again!")
-
         except:
             print("Whoops, caught an exception here! Choose another weapon for now.")
     print(f"You have chosen the {player.get_wpn()}. {player.get_wpnDesc()}")
@@ -225,6 +227,7 @@ and Focus Shots deal massive damage to a single enemy, but destroy themselves up
 It was performing a training exercise with its crew before suddenly disappearing off radar. They have lead to conclude that the Whistler was, somehow, destroyed.
 You are to go to the crash site on Salvation, a small border colony, and assess the situation as the IPF would rather not get the public involved as of right now. Suspiscious...
 But the pay is enough to keep you going for the next three months, so regardless, you accept.''')
+    
     core_info.set_state("idle")
     transit(1)
     save()
@@ -261,6 +264,44 @@ It is capable of going nearly everywhere, and allows you to perform your own ana
     except:
         print("Your fighter says your coordinates are invalid. Please try again.")
 
+def perk():
+    running = True
+    while running:
+        print('''You've advanced enough to be able to enhance one of your attributes. Pick any from the following:
+        1. Increase attack by 3 points
+        2. Increase accuracy by 5 points
+        3. Increase defense by 1 point.
+        4. Increase initiative by 2 points
+        ''')
+
+        try:
+            choice = int(input())
+        except:
+            print("Input was not an integer.")
+
+        if choice == 1:
+            player.set_atk(player.get_atk() + 3)
+            print(f"Attack has gone up to {player.get_atk()}.")
+            running = False
+
+        elif choice == 2:
+            player.set_hitRoll(player.get_hitRoll() + 5)
+            print(f"Accuracy has gone up to {player.get_hitRoll()}")
+            running = False
+
+        elif choice == 3:
+            player.set_dfe(player.get_dfe() + 1)
+            print(f"Defense has gone up to {player.get_dfe()}")
+            running = False
+
+        elif choice == 4:
+            player.set_itv(player.get_itv() + 2)
+            print(f"Initiative has gone up to {player.get_itv()}")
+
+        else:
+            print("Your input was out of range.")
+
+
 def main_loop():
     location_list = [crashsite, new_hope]
     running = True
@@ -296,6 +337,9 @@ def main_loop():
             player.set_hp(player.get_hp() + 20)
             player.set_damage(player.get_hp())
             print(f"You have advanced a stage. Good job, {player.get_name()}! Check back at your ship for more info on what to do next.")
+
+            if core_info.get_stage() % 2 == 0:
+                perk()
 
             if core_info.get_stage() >= 1:
                 new_hope.set_available(True)

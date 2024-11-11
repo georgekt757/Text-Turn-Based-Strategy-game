@@ -6,7 +6,6 @@ from combat import combat
 from player import player
 from npc import *
 
-
 class Location:
     def __init__(self, ID, name, desc, canTalk, available):
         self._ID = ID 
@@ -272,9 +271,6 @@ class New_Hope(Location):
             self._status = "goodbye"
         
         return self._status
-
-
-
 
 crashsite = Crash_Site(1, "Crash site",
                     "Crash site of the IPNS Whistler, an ageing Sol-class observation ship. Fires can be seen all around the crash site. There were definitely no survivors here.",
