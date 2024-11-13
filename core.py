@@ -207,6 +207,9 @@ It should go without saying that these are highly important, just as much as arm
                 player.change_wpn("lmg")
             elif choice == 757: # Gives the player the Debug Gun. Not listed for obvious reasons.
                 player.change_wpn("dbg")
+            elif choice == 47: # Staller gun
+                player.change_wpn("stl")
+
             else:
                 print("Went out of range, buddy. Try again!")
         except:
@@ -338,8 +341,8 @@ def main_loop():
             player.set_damage(player.get_hp())
             print(f"You have advanced a stage. Good job, {player.get_name()}! Check back at your ship for more info on what to do next.")
 
-            if core_info.get_stage() % 2 == 0:
-                perk()
+            # if core_info.get_stage() % 2 == 0:
+            perk()
 
             if core_info.get_stage() >= 1:
                 new_hope.set_available(True)

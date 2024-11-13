@@ -2,6 +2,21 @@
 
 (DD/MM/YYYY)
 
+## 13/11/2024
+
+- Modified the insertion sort method in [combat.py](combat.py) so that it does three passes for the initiative changes.
+- Created inventory usage during combat, so that players may use healthshots, grenades, and focus shots.
+- Also made checks so that an enemy killed by a grenade despite a different enemy being targeted will be killed and removed from `fighters` once its their turn.
+- *~~Created the Staller Gun in [the weapons dictionary](JSON/weapons.json) so that I can test longer combat scenarios more effectively~~*
+- Modified some attributes of all items in [their dictionary](JSON/items.json):
+  - Healthshots now "restore" a negative value for compatability with the `player.deal_damage(damage)` method.
+  - Impact grenades don't have a range anymore, at least not one defined in the dictionary. I will most likely re-add it in the future.
+  *~~Because boy are those prospectors getting their arses beat by them~~*
+  - Updated the focus shot text to better fit its firing condition \- That is, it will not fire if it will kill the player.
+- Attribute modification is now granted every level rather than every other level.
+
+As for the old combat option in the main menu, I think it has been superseded by talking and then deliberately initiating combat there, if the player so chooses.
+
 ## 11/11/2024
 
 ### Minor update - Perks

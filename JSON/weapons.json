@@ -75,6 +75,17 @@
         "hitRoll":100,
         "ammo":999,
         "fireType":"single"
+    },
+
+"stl":
+
+    {
+        "name":"Debug Staller Gun",
+        "desc":"Gun used in development to test long combat. Fuckall damage. 100% chance to hit. And if you're reading this, you're weird for thinking this gun will save you.",
+        "atk":0,
+        "hitRoll":100,
+        "ammo":999,
+        "fireType":"single"
     }
 
 }

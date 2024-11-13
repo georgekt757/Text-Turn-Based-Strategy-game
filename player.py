@@ -112,7 +112,11 @@ class Player:
     def deal_damage(self, damage): # Use negative damage parameter for healing
         if damage > self._hp:
             damage = self._hp
+
         self._damage -= damage
+
+        if self._damage > self._hp:
+            self._damage = self._hp
 
     # Utilises the already existing setter methods for amr and dfe. Works excellently.
     def change_amr(self, amr):

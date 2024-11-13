@@ -65,7 +65,8 @@ class Menu:
         self._inInv = True
         while self._inInv:
 
-            print(f'''\n{player.get_wpn()} - {player.get_wpnDesc()} It deals {player.get_atk()} damage and holds {player.get_clipSize()} bullets.
+            print(f'''
+{player.get_wpn()} - {player.get_wpnDesc()} It deals {player.get_atk()} damage and holds {player.get_clipSize()} bullets.
 {player.get_amr()} - {player.get_amrDesc()} It provides {player.get_dfe()} points of protection.
 {inv.get_SLOT1()} - {inv.get_DESC1()} You have {inv.get_count1()}.
 {inv.get_SLOT2()} - {inv.get_DESC2()} You have {inv.get_count2()}.

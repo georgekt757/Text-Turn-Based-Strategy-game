@@ -26,7 +26,9 @@ Core gameplay has been inspired by Fallout 1 and 2.
   - [Dataclasses](https://docs.python.org/3/library/dataclasses.html)
 
 - Philipp Acsany at RealPython [for teaching me how to parse JSON into Python](https://realpython.com/python-json/)
-- w3schools [for also teaching me how to parse JSON into Python](https://www.w3schools.com/python/python_json.asp)
+- w3schools for:
+  - [Also teaching me how to parse JSON into Python](https://www.w3schools.com/python/python_json.asp)
+  - [Absolute values](https://www.w3schools.com/python/ref_func_abs.asp)
 - GeeksForGeeks [for some additional file handling assistance, with regards to writing to a file for the save method in core.py](https://www.geeksforgeeks.org/writing-to-file-in-python/)
 - ChatGPT did help me with explaining *how* to do things, but not writing any of the code itself unless I've said so otherwise in a comment (And I have only done that once).
 - The users of Stack Overflow for:
