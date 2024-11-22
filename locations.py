@@ -3,7 +3,7 @@ from random import randint
 from time import sleep
 
 from combat import combat
-from player import player
+from player import player, inv
 from npc import *
 
 class Location:
@@ -94,6 +94,8 @@ class Crash_Site(Location):
                     elif self._status == "victory":
                         self._prospector_survived = False
                         self._status = "resolved"
+                        print("On their corpses, you find a mostly empty bundle of impact grenades. They likely used most of them for blasting.\nYou were only able to recover one that wasn't used.")
+                        inv.add_SLOT2(1)
                         self._running = False
                 
                 elif self._choice == 3:
@@ -210,7 +212,8 @@ class New_Hope(Location):
                             sleep(3.0)
                             print(self._contents["new_hope_prospectors"]["distrustful5"])
                             sleep(3.0)
-                            print("I forgive you.")
+                            print("I forgive you. And thank you.")
+                            inv.add_SLOT1(2)
                             sleep(3.0)
                             self._prospector_survived = True
                             self._status = "resolved"
@@ -237,6 +240,9 @@ class New_Hope(Location):
                             sleep(3.0)
                             print(self._contents["new_hope_bartender"]["grateful3"])
                             sleep(3.0)
+                            print(self._contents["new_hope_bartender"]["grateful4"])
+                            inv.add_SLOT3(1)
+                            sleep(2.0)
                             self._running = False
 
 
@@ -263,6 +269,9 @@ class New_Hope(Location):
                     sleep(3.0)
                     print(self._contents["new_hope_bartender"]["grateful3"])
                     sleep(3.0)
+                    print(self._contents["new_hope_bartender"]["grateful4"])
+                    inv.add_SLOT3(1)
+                    sleep(2.0)
                     self._running = False
 
         elif stage >= 2:

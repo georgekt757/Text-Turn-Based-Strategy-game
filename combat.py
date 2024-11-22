@@ -36,18 +36,12 @@ def combat(list):
     died = False
     enemycount = len(fighters) - 1
     player.set_ammoSpent(0)
-    INV_TEXT = f'''
-Would you like to:
-1. Use healthshot - {inv.get_count1()} remaining
-2. Use HI grenade - {inv.get_count2()} remaining
-3. Use focus shot - {inv.get_count3()} remaining
-9. Do nothing else
-'''
 
     with open(r'JSON\items.json','r') as (data):
         items = json.load(data)
         stim = items["stim"]["HP"]
         hi_grenade_atk = items["impact"]["atk"]
+        hi_grenade_atk_max = items["impact"]["atkMax"]
         focus = items["focus"]["atk"]
         focus_backfire = items["focus"]["atkSelf"]
 
@@ -55,7 +49,7 @@ Would you like to:
     sleep(2)
     while in_combat:
         turn += 1
-        print(f"Turn {turn}.\n")
+        print(f"\nTurn {turn}.\n")
         
         for i in range(len(fighters)):
             try:
@@ -92,12 +86,17 @@ Would you like to:
 
                     hit = randint(0, 100)
 
-                    choice = int(input(INV_TEXT))
+                    choice = int(input(f'''
+Would you like to:
+1. Use healthshot - {inv.get_count1()} remaining
+2. Use HI grenade - {inv.get_count2()} remaining
+3. Use focus shot - {inv.get_count3()} remaining
+9. Do nothing else
+'''))
                     
                     if player.get_ammoSpent() >= player.get_clipSize():
                         print(f"You have no ammo left for your {player.get_wpn()}! Reloading!")
                         player.set_ammoSpent(0)
-                        break
                     elif hit <= player.get_hitRoll():
                         try:
                             dmg = player.get_atk() // e.get_dfe() + randint(0, player.get_atk() // 3)
@@ -106,15 +105,15 @@ Would you like to:
                         player.consume_ammo()
                         print(f"You dealt {dmg} damage using {player.get_wpn()} to {e.get_name()}.")
                         e.deal_damage(dmg)
-                    
                     else:
                         player.consume_ammo()
                         print(f"You missed with your {player.get_wpn()}!")
                     
                     if choice == 1 and inv.get_count1() > 0:
-                        player.deal_damage(stim)
+                        restore = stim + randint(-6,6)
+                        player.deal_damage(restore)
                         inv.add_SLOT1(-1)
-                        print(f"You restore {abs(stim)} HP.")
+                        print(f"You restore {abs(restore)} HP.")
                     elif choice == 1 and inv.get_count1() <= 0:
                         print("You have no healthshots!")
                     
@@ -122,8 +121,9 @@ Would you like to:
                         inv.add_SLOT2(-1)
                         for k in range(len(fighters)):
                             if fighters[k] != p:
+                                dmg = randint(hi_grenade_atk, hi_grenade_atk_max)
                                 fighters[k].deal_damage(hi_grenade_atk)
-                                print(f"You deal {hi_grenade_atk} damage to {fighters[k].get_name()}")
+                                print(f"You deal {dmg} damage to {fighters[k].get_name()}")
                     elif choice == 2 and inv.get_count2() <= 0:
                         print("You have no grenades!")
 

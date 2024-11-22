@@ -88,7 +88,7 @@ class Player:
         if self._fireType == "single":
             self._ammoSpent += 1
         elif self._fireType == "burst":
-            self._ammoSpent += -(self._clipSize // -randint(2, 5))
+            self._ammoSpent += -(self._clipSize // -randint(4, 7))
         
         if self._ammoSpent > self._clipSize:
             self._ammoSpent = self._clipSize

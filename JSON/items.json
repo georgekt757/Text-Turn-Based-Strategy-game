@@ -12,14 +12,15 @@
     {
         "name":"High-Impact Grenade",
         "desc":"Deals minor damage to all enemies, perfect for crowd control.",
-        "atk":10
+        "atk":4,
+        "atkMax":12
     },
 
     "focus":
 
     {
         "name":"Focus Shot",
-        "desc":"Deals massive damage to your enemies, but due to its instability, it will destroy itself upon use, as well as dealing damage to yourself. Due to contingency programming, it will not fire if it will kill you.",
+        "desc":"Deals massive damage to a target, but will destroy itself upon use and damage yourself in the process. Due to contingency programming, it will not fire if it will kill you.",
         "atk":50,
         "atkSelf":15
     }

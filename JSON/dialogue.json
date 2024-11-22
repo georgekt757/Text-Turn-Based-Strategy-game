@@ -22,6 +22,7 @@
         "grateful1":"...Is it over? What on Salvation just happened?!",
         "grateful2":"Looting off the dead is sick. I am glad you took care of them. Consider yourself welcome at the New Hope Central any time you feel like coming around here.",
         "grateful3":"You might wanna take that black box of his corpse. Looks like it'll be useful. Return it to your employers, I say.",
+        "grateful4":"Oh, and take this Focus Shot. I'm a bartender, I sell drinks, not weapons. Just don't think too much about where I got it.",
 
         "generic":"Yo buddy. Still alive?"
 
@@ -37,7 +38,7 @@
         "distrustful2":"HEY, IT'S CALLED PROSPECTING, NOT-",
         "distrustful3":"...",
         "distrustful4":"While we were there, we were able to nag the ship's black box. Take it, all yours, return it to the IPF maybe, no value in it for us whatsoever...",
-        "distrustful5":"No worries. And... Sorry for trying to loot the site so soon.",
+        "distrustful5":"No worries. And... Sorry for trying to loot the site so soon. And... Here. (He gives you two healthshots.)",
 
         "vengeful":"And you're that arsehole who killed my buddies! Get 'em, drone! (Sensing the oncoming battle, the bartender and other patrons head for cover or flee the building)"
     }

@@ -2,6 +2,31 @@
 
 (DD/MM/YYYY)
 
+## 22/11/2024
+
+### Major Update - Cleanup
+
+- [Inventory usage in combat](combat.py) has seen further changes:
+  - Fixed the bug that caused how much you have left of an item to not update.
+  - Healthshots and impact grenades now have some variance in their numbers.
+- The random initiative selection in [core.py](core.py) has been removed, and has now been replaced in its entirety by the `perk()`
+method and the armour changes detailed later in this changelog.
+- Also did some cleanup on the strings in [core](core.py).
+- Item integration is now done properly, so your choices will reward certain items.
+- Buffed burst ammo consumption, so you don't use too much too quickly by increasing the rannge of the divisor in `self.consume_ammo()`.
+- Some other changes in the JSON, to reflect the changes above:
+  - [Dialogue](JSON/dialogue.json) has been modified to make it so the player knows they're received an item in an immersive way.
+  - Reimplimented the attack range for impact grenades in [items.json](JSON/items.json), and shortened the description of the Focus Shot.
+  - Several changes have been made to [armour](JSON/protection.json):
+    - Light armour now increases initiative significantly, to better fit the new initiative system.
+    - In contrast, heavy armour will tank your inititative down.
+  - A few changes were made to the [guns](JSON/weapons.json):
+    - Reduced the `hitRoll` of the Shotgun from 66 to 65.
+    - The Sniper Rifle now has an attack rating of 30, up from 25.
+    - The Pistol also received a small buff, now dealing 9 damage instead of 8.
+
+I don't think there's too much else that I can do with regards to cleaning things up. The way forward is now to create more content.
+
 ## 13/11/2024
 
 - Modified the insertion sort method in [combat.py](combat.py) so that it does three passes for the initiative changes.

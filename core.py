@@ -104,7 +104,6 @@ def load():
     transit(save_data["location"])
 
 def first_load():
-    done = False
     choice = 0
     
     while player.get_name() == None:
@@ -118,7 +117,7 @@ def first_load():
     print(f"Nice to meet you, {player.get_name()}!")
 
     # Nice little part of the code that sets the armour.
-    print("Protection is essential for withstanding damage, but be warned - All of these penalise initiative to some extent. You can deal with that just after, though...")
+    print("Protection is essential for withstanding damage, and how well you can move around in it - Your initiative score.")
     print("Select which armour class you'd prefer:")
     while player.get_amr() == None:
         print('''
@@ -144,41 +143,7 @@ def first_load():
 
     # Initiative
     print("Initiative is a statistic that determines whose turn will be next during combat. The minimum is 0, the maximum is 20.")
-    print(f'''
-Your current initiative is {player.get_itv()}, your penalty has already been applied, but you can roll for a chance at an increase... or a decrease.")
-Do you take the roll... Or not?
-''')
-    
-    while not done:
-        print('''
-    1. Yes
-    2. No
-              ''')
-        
-        try: 
-            choice = int(input())
-            if choice == 1:
-                a = randint(-11,10)
-                # Decided to make another nested if statement comparing it and leaving some cheeky messages behind. For lulz. 
-                # Won't be any more. I thought even this was pushing it but failed to find an alternative.
-                if (player.get_itv() + a) <= 0:
-                    print("Your initiative is now 0. Have fun!")
-                elif player.get_itv() > player.get_itv() + a:
-                    print("Looks like your initiative went down. Oh well. Especially considering you have few opportunities to change this mid-game.")
-                elif player.get_itv() < player.get_itv() + a:
-                    print("Well, looks like fortune favours you as your initiative went up! Even better, this can't be lowered mid-game, so no more penalties for you!")
-                else:
-                    print("No change in initiative score. Consider yourself lucky - Especially considering initiative cannot be changed often.")
-                player.set_itv(player.get_itv() + a)
-                print(f"Your new initiative is {player.get_itv()}.")
-                done = True
-            elif choice == 2:
-                print(f"You decide not to roll. Your initiative is still {player.get_itv()}")
-                done = True
-            else:
-                print("Went out of range, buddy!")
-        except:
-            print("Your response was invalid, you likely input a string! Just do either 1 or 2, nothing more.")
+    print(f"Your current initiative, influenced by your armour choice, is {player.get_itv()}. You will have a chance to increase this later, through advancements.")
     
     print('''Now that your armour and initiative has been sorted out, there's only one thing left - Weapons.
 It should go without saying that these are highly important, just as much as armour, and you've got five choices:''')
@@ -225,8 +190,9 @@ and Focus Shots deal massive damage to a single enemy, but destroy themselves up
     inv.add_SLOT2(2)
     inv.add_SLOT3(1)
 
-    print("\nYou have completed character creation. Good job, sir or madam!")
-    print('''\nThe Intragalactic Peacekeeping Force has contracted you to investigate the disappearance of one of their ships, the IPNS Whistler, a Sol-class observation ship.
+    print("\nYou have completed character creation. Good job, freelancer! Time for your mission brief...")
+    print('''
+The Intragalactic Peacekeeping Force has contracted you to investigate the disappearance of one of their ships, the IPNS Whistler, a Sol-class observation ship.
 It was performing a training exercise with its crew before suddenly disappearing off radar. They have lead to conclude that the Whistler was, somehow, destroyed.
 You are to go to the crash site on Salvation, a small border colony, and assess the situation as the IPF would rather not get the public involved as of right now. Suspiscious...
 But the pay is enough to keep you going for the next three months, so regardless, you accept.''')
@@ -303,7 +269,6 @@ def perk():
 
         else:
             print("Your input was out of range.")
-
 
 def main_loop():
     location_list = [crashsite, new_hope]

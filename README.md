@@ -1,6 +1,6 @@
 # Readme
 
-Text TBS version v0.4.2
+Text TBS version v0.5.1
 
 ## How to play
 

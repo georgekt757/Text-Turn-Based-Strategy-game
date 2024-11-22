@@ -16,7 +16,7 @@
     {
         "name":"Pistol",
         "desc":"Common amongst civilians, it is mainly used for policing roles and usually not given to militaries. Its near-guaranteed chance for bullets to connect makes up for its low damage.",
-        "atk":8,
+        "atk":9,
         "hitRoll":98,
         "ammo":13,
         "fireType":"single"
@@ -28,7 +28,7 @@
         "name":"Shotgun",
         "desc":"Short-range firearm loaded with buckshot rounds. Banned in most places. Deals high damage, though you may experience difficulty hitting with this weapon.",
         "atk":20,
-        "hitRoll":66,
+        "hitRoll":65,
         "ammo":5,
         "fireType":"single"
     },
@@ -38,7 +38,7 @@
     {
         "name":"Sniper Rifle",
         "desc":"Long-range rifle with medium stopping power, favoured by snipers on a budget. Good damage and excellent accuracy, though it can only hold one round.",
-        "atk":25,
+        "atk":30,
         "hitRoll":95,
         "ammo":1,
         "fireType":"single"
@@ -50,7 +50,7 @@
         "name":"Light Machine Gun",
         "desc":"A high stopping power machine gun barely wieldable by humans, as ordinarily these would be mounted. As such, you aren't likely to hit with this often.",
         "atk":35,
-        "hitRoll":30,
+        "hitRoll":35,
         "ammo":150,
         "fireType":"burst"
     },
@@ -81,7 +81,7 @@
 
     {
         "name":"Debug Staller Gun",
-        "desc":"Gun used in development to test long combat. Fuckall damage. 100% chance to hit. And if you're reading this, you're weird for thinking this gun will save you.",
+        "desc":"Gun used in development to test long combat. Fuckall damage. 100% chance to hit, not that it would matter. And if you're reading this, you're weird for thinking this gun will save you.",
         "atk":0,
         "hitRoll":100,
         "ammo":999,
