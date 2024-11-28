@@ -145,8 +145,8 @@ Anything else - Remain at current location''')
                 self._choice = int(input())
                 if self._choice == 1:
                     return self._NEW_LOCATION
-            except:
-                print("Your input was not an integer. Try again.")
+            except ValueError as e:
+                print(f"Your input was not an integer: {e} Try again.")
         
             self._inFighter = False
 
@@ -195,7 +195,7 @@ Anything else - Remain at current location''')
                     self._inMain = False
                     return "exit"
             
-            except:
-                print("Your input wasn't an integer. Try again.")
+            except ValueError as e:
+                print(f"Your input wasn't an integer: {e}. Try again.")
 
 main_menu = Menu()

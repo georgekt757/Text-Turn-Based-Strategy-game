@@ -28,6 +28,7 @@
 	},
 
 "dbg":
+
 	{
 		"name":"Debug Armour",
 		"desc":"Armour used by me for debugging. If you got this yourself, you either randomly entered a number and got lucky. Or you've just read what's in core.py.",

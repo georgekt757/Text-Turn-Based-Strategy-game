@@ -23,7 +23,7 @@ def insertion_sort(objects): # Yes, I used ChatGPT for this. No, I am not ashame
         try:
             if objects[k].get_itv() == objects[k + 1].get_itv():
                 objects[k + 1].set_itv(objects[k + 1].get_itv() - 1)
-        except:
+        except IndexError:
             pass
     return objects
 
@@ -62,7 +62,7 @@ def combat(list):
                     elif hit <= e.get_hitRoll():
                         try:
                             dmg = e.get_atk() // player.get_dfe() + randint(0, e.get_atk() // 3)
-                        except:
+                        except ZeroDivisionError:
                             dmg = e.get_atk() + randint(0, e.get_atk() // 3)
                         print(f"{e.get_name()} dealt {dmg} damage using {e.get_wpn()}.")
                         player.deal_damage(dmg)
@@ -100,7 +100,7 @@ Would you like to:
                     elif hit <= player.get_hitRoll():
                         try:
                             dmg = player.get_atk() // e.get_dfe() + randint(0, player.get_atk() // 3)
-                        except:
+                        except ZeroDivisionError:
                             dmg = player.get_atk() + randint(0, player.get_atk() // 3)
                         player.consume_ammo()
                         print(f"You dealt {dmg} damage using {player.get_wpn()} to {e.get_name()}.")
@@ -122,8 +122,10 @@ Would you like to:
                         for k in range(len(fighters)):
                             if fighters[k] != p:
                                 dmg = randint(hi_grenade_atk, hi_grenade_atk_max)
+                                damage_before = fighters[k].get_damage()
                                 fighters[k].deal_damage(hi_grenade_atk)
-                                print(f"You deal {dmg} damage to {fighters[k].get_name()}")
+                                damage_after = fighters[k].get_damage()
+                                print(f"You deal {damage_before - damage_after} damage to {fighters[k].get_name()}.")
                     elif choice == 2 and inv.get_count2() <= 0:
                         print("You have no grenades!")
 
@@ -144,7 +146,7 @@ Would you like to:
                 else:
                     print("Someone fucked up somewhere.")
                 sleep(1)
-            except:
+            except IndexError:
                 pass
         enemycount = len(fighters) - 1
         if enemycount <= 0:

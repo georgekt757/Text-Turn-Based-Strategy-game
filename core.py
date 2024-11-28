@@ -63,11 +63,10 @@ def save():
             data.write(json.dumps(save_data))
         print("Saved to this directory successfuly. You may move the file wherever you want.")
         
-    except:
-        rename = int(input("\n\nYour data could not be saved. If your name has special characters that messes with Windows's file management, you can change it now and save again. Would you like to?\n1. Yes\nInput anything else to pass.\n"))
-        if rename == 1:
-            player.set_name(input("New name: "))
-            save()
+    except OSError as e:
+        print(f"\n\nYour data could not be saved: {e}. Your name has special characters that are invalid to your OS's file management, change it now and save again.\n")
+        player.set_name(input("New name: "))
+        save()
 
 def load():
 
@@ -112,8 +111,8 @@ def first_load():
         if player.get_name() == "":
             print("You have a name. So why don't you use it?")
             player.set_name(None)
-      except:
-        print("That's not valid now, is it?")
+      except ValueError as e:
+        print(f"That's not valid now, is it?: {e}")
     print(f"Nice to meet you, {player.get_name()}!")
 
     # Nice little part of the code that sets the armour.
@@ -137,8 +136,8 @@ def first_load():
                 player.change_amr("dbg")
             else:
                 print("Went out of range, buddy!")
-        except:
-            print("Whoops, caught an exception here! Choose another piece of armour for now.")
+        except ValueError as e:
+            print(f"Whoops, caught an exception here!: {e} \nMake sure your input is an integer!")
     print(f"You have chosen {player.get_amr()}. {player.get_amrDesc()}")
 
     # Initiative
@@ -177,8 +176,8 @@ It should go without saying that these are highly important, just as much as arm
 
             else:
                 print("Went out of range, buddy. Try again!")
-        except:
-            print("Whoops, caught an exception here! Choose another weapon for now.")
+        except ValueError as e:
+            print(f"Whoops, caught an exception here!: {e} \nMake sure your input is an integer!")
     print(f"You have chosen the {player.get_wpn()}. {player.get_wpnDesc()}")
 
     print('''
@@ -212,8 +211,8 @@ def init():
                 load()
             else:
                 print("Your input was not one of the numbers listed. Try again.")
-        except:
-            print("Programme caught exception. Try again.")
+        except ValueError as e:
+            print(f"Programme caught exception {e}. Try again.")
 
 def transit(target):
     try:
@@ -230,8 +229,8 @@ It is capable of going nearly everywhere, and allows you to perform your own ana
             crashsite.enter(core_info.get_stage())
         elif target == 2: # New Hope
             new_hope.enter(core_info.get_stage())
-    except:
-        print("Your fighter says your coordinates are invalid. Please try again.")
+    except ValueError as e:
+        print(f"Your fighter says your coordinates are invalid and returned {e}.Please try again.")
 
 def perk():
     running = True
@@ -245,8 +244,8 @@ def perk():
 
         try:
             choice = int(input())
-        except:
-            print("Input was not an integer.")
+        except ValueError as e:
+            print(f"Input was not an integer: {e}. Try again!")
 
         if choice == 1:
             player.set_atk(player.get_atk() + 3)
@@ -292,8 +291,8 @@ def main_loop():
             print("9. Cancel")
             try:
                 choice = int(input())
-            except:
-                print("Your input was not an integer. Try again.")
+            except ValueError as e:
+                print(f"Your input was not an integer: {e}. Try again.")
 
             if choice == 9:
                 print("Aborting transport.")
