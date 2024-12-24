@@ -63,13 +63,16 @@ def combat(list):
                         try:
                             dmg = e.get_atk() // player.get_dfe() + randint(0, e.get_atk() // 3)
                         except ZeroDivisionError:
-                            dmg = e.get_atk() + randint(0, e.get_atk() // 3)
+                            dmg = e.get_atk() + randint(0, e.get_atk())
                         print(f"{e.get_name()} dealt {dmg} damage using {e.get_wpn()}.")
                         player.deal_damage(dmg)
                     else:
                         print(f"{e.get_name()} missed!")
-
-                elif fighters[i] == p: # Player's turn
+            except IndexError:
+                pass
+            
+            try:
+                if fighters[i] == p: # Player's turn
                     if player.get_damage() <= 0:
                         in_combat = False
                         died = True
@@ -93,7 +96,7 @@ Would you like to:
 3. Use focus shot - {inv.get_count3()} remaining
 9. Do nothing else
 '''))
-                    
+                
                     if player.get_ammoSpent() >= player.get_clipSize():
                         print(f"You have no ammo left for your {player.get_wpn()}! Reloading!")
                         player.set_ammoSpent(0)
@@ -101,7 +104,7 @@ Would you like to:
                         try:
                             dmg = player.get_atk() // e.get_dfe() + randint(0, player.get_atk() // 3)
                         except ZeroDivisionError:
-                            dmg = player.get_atk() + randint(0, player.get_atk() // 3)
+                            dmg = player.get_atk() + randint(0, player.get_atk())
                         player.consume_ammo()
                         print(f"You dealt {dmg} damage using {player.get_wpn()} to {e.get_name()}.")
                         e.deal_damage(dmg)
@@ -123,7 +126,7 @@ Would you like to:
                             if fighters[k] != p:
                                 dmg = randint(hi_grenade_atk, hi_grenade_atk_max)
                                 damage_before = fighters[k].get_damage()
-                                fighters[k].deal_damage(hi_grenade_atk)
+                                fighters[k].deal_damage(dmg)
                                 damage_after = fighters[k].get_damage()
                                 print(f"You deal {damage_before - damage_after} damage to {fighters[k].get_name()}.")
                     elif choice == 2 and inv.get_count2() <= 0:
@@ -142,25 +145,23 @@ Would you like to:
                     if e.get_damage() <= 0:
                         print(f"{e.get_name()} was killed!")
                         fighters.remove(e)
-
-                else:
-                    print("Someone fucked up somewhere.")
-                sleep(1)
             except IndexError:
                 pass
+
+            sleep(1)
+
         enemycount = len(fighters) - 1
         if enemycount <= 0:
             in_combat = False
 
-    
-    if died:
-        in_combat = False
-        msg = "player_died"
-    elif enemycount <= 0:
-        in_combat = False
-        print("All targets have been eliminated!")
-        msg = "victory"
-    else:
-        pass
-    
+        if died:
+            in_combat = False
+            msg = "player_died"
+        elif enemycount <= 0:
+            in_combat = False
+            print("All targets have been eliminated!")
+            msg = "victory"
+        else:
+            pass
+        
     return msg

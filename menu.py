@@ -1,5 +1,5 @@
 from player import player, inv
-from locations import crashsite, new_hope
+from locations import crashsite, new_hope, guardian_station
 
 class Menu:
     def __init__(self):
@@ -21,7 +21,6 @@ class Menu:
         self._NO_TALK = "There's nobody here to talk to."
         self._NEW_LOCATION = "new_location"
 
-
     def location_stage_handling(self, location):
         if location == 1:
             self._location = crashsite.get_name()
@@ -29,6 +28,9 @@ class Menu:
         elif location == 2:
             self._location = new_hope.get_name()
             self._location_desc = new_hope.get_desc()
+        elif location == 3:
+            self._location = guardian_station.get_name()
+            self._location_desc = guardian_station.get_desc()
         else:
             print("Error - Invalid location data")
 
@@ -43,6 +45,13 @@ class Menu:
             print(self._NO_TALK)
         elif location == 2 and new_hope.get_canTalk():
             self._dialogue_outcome = new_hope.initiate_dialogue(stage)
+
+        elif location == 3 and guardian_station.get_canTalk():
+            self._dialogue_outcome = guardian_station.initiate_dialogue(stage)
+        elif location == 3 and not guardian_station.get_canTalk():
+            print(self._NO_TALK)
+            self._dialogue_outcome = "goodbye"
+
         else:
             print("Dialogue has yet to be programmed at that location.")
     
@@ -133,7 +142,7 @@ The bartender suggested I go to the IPF to decode this data. Better than risking
                 print('''Find someone who can decode black box data.
                       
 As per the bartender's suggestion, I picked up the black box from Bolt's corpse. He must've been at the crash site but left earlier. Shame I had to kill him.
-Bolt suggested I go to the IPF to decode this data. Better than risking my life doing it through... Less legitimate means.''')
+The bartender suggested I go to the IPF to decode this data. Better than risking my life doing it through... Less legitimate means.''')
 
             else:
                 print("<< Nothing. Await further assignment >>")
@@ -145,8 +154,8 @@ Anything else - Remain at current location''')
                 self._choice = int(input())
                 if self._choice == 1:
                     return self._NEW_LOCATION
-            except ValueError as e:
-                print(f"Your input was not an integer: {e} Try again.")
+            except ValueError:
+                print(f"Your input was not an integer. Try again.")
         
             self._inFighter = False
 

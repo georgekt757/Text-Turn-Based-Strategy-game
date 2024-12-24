@@ -3,7 +3,7 @@ from random import randint
 from dataclasses import dataclass
 
 class Player:
-    def __init__(self, name, hp, wpn, wpnDesc, atk, amr, amrDesc, dfe, itv): # Name, inventory, hitpoints (need to create damage formulae), active weapon, attack, defence, initiative
+    def __init__(self, name, hp, wpn, wpnDesc, atk, amr, amrDesc, dfe, itv, morality): # Name, inventory, hitpoints (need to create damage formulae), active weapon, attack, defence, initiative
         self._name = name
         self._hp = hp
         self._wpn = wpn
@@ -13,6 +13,7 @@ class Player:
         self._amrDesc = amrDesc
         self._dfe = dfe
         self._itv = itv
+        self._morality = morality
 
         self._contents = None
         self._clipSize = 0
@@ -138,6 +139,13 @@ class Player:
         self.set_hitRoll(self._contents[wpn]["hitRoll"])
         self._fireType = self._contents[wpn]["fireType"]
 
+    def set_morality(self, morality):
+        self._morality = morality
+    def get_morality(self):
+        return self._morality
+    def morality(self, morality):
+        self._morality += morality
+
 @dataclass
 class Inventory:
     SLOT1: str # Healthshots
@@ -196,4 +204,4 @@ inv = init()
 player = Player(None, 30, 
                 None, "You have no weapon equipped!", 0, 
                 None, "You have no armour equipped!", 0, 
-                13)
+                13, 0)

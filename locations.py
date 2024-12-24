@@ -93,6 +93,7 @@ class Crash_Site(Location):
                         self._running = False
                     elif self._status == "victory":
                         self._prospector_survived = False
+                        player.morality(-1)
                         self._status = "resolved"
                         print("On their corpses, you find a mostly empty bundle of impact grenades. They likely used most of them for blasting.\nYou were only able to recover one that wasn't used.")
                         inv.add_SLOT2(1)
@@ -102,8 +103,8 @@ class Crash_Site(Location):
                     self._roll = randint(1, 10)
                     if self._roll >= 5:
                         print(self._contents["prospectors"]["roll_pass"]) 
-
                         self._prospector_survived = True
+                        player.morality(1)
                         self._status = "resolved"
                         self._running = False
                     else:
@@ -113,6 +114,7 @@ class Crash_Site(Location):
                             self._running = False
                         elif self._status == "victory":
                             self._prospector_survived = False
+                            # player.morality(0)
                             self._status = "resolved"
                             self._running = False
                 if self._status == "talk":
@@ -216,6 +218,7 @@ class New_Hope(Location):
                             inv.add_SLOT1(2)
                             sleep(3.0)
                             self._prospector_survived = True
+                            player.morality(1)
                             self._status = "resolved"
                             self._running = False
                         
@@ -230,6 +233,7 @@ class New_Hope(Location):
                             self._running = False
                         elif self._status == "victory":
                             self._prospector_survived = False
+                            player.morality(-1)
                             self._status = "resolved"
 
                             print(self._contents["new_hope_bartender"]["grateful1"])
@@ -244,7 +248,6 @@ class New_Hope(Location):
                             inv.add_SLOT3(1)
                             sleep(2.0)
                             self._running = False
-
 
         elif stage <= 1 and self._convinced and not crashsite.get_prospector_surived():
             print(self._contents["new_hope_prospectors"]["greeting"])
@@ -281,6 +284,39 @@ class New_Hope(Location):
         
         return self._status
 
+class Guardian_Station(Location):
+    def __init__(self, ID, name, desc, canTalk, available):
+        super().__init__(ID, name, desc, canTalk, available)
+
+        self._rebels_pacified = False
+        self._rebels_alive = False
+
+    def get_rebels_pacified(self):
+        return self._rebels_pacified
+    def set_rebels_pacified(self, rebels_pacified):
+        self._rebels_pacified = rebels_pacified
+
+    def get_rebels_alive(self):
+        return self._rebels_alive
+    def set_rebels_alive(self, rebels_alive):
+        self._rebels_alive = rebels_alive
+
+    def enter(self, stage):
+        print(f"You arrive at: {self._name}. {self._desc}")
+        if stage == 2 and self._rebels_pacified == False:
+            print('''The station is broadcasting an emergency signal:
+<< ALERT! INTERNAL SECURITY BREACH DETECTED, CLASS 5! DOCKING IS STRICTLY FORBIDDEN UNTIL FURTHER NOTICE! FAILURE TO ADHERE WILL RESULT IN HARSH PENALTIES! >>
+Naturally, you decide to dock your ship at one of the gates some moron forgot to close behind them as they were escaping, seizing a rare opportunity where you don't have to sit in a queue for two hours.
+''')
+            self._canTalk = True
+        else:
+            print(f"Your identification clears and you're granted permission to dock at gate D{randint(0,9)}{randint(1,9)}")
+            self._canTalk = False
+
+    def initiate_dialogue(self, stage):
+        print("talk talk talk")
+        return "goodbye"
+
 crashsite = Crash_Site(1, "Crash site",
                     "Crash site of the IPNS Whistler, an ageing Sol-class observation ship. Fires can be seen all around the crash site. There were definitely no survivors here.",
                     False, True)
@@ -288,3 +324,7 @@ crashsite = Crash_Site(1, "Crash site",
 new_hope = New_Hope(2, "New Hope",
                     "A small town with all amenities necessary for its survival, including a bar named 'The New Hope Central'. ",
                     False, False)
+
+guardian_station = Guardian_Station(3, "Guardian Station",
+                                    "The Intragalactic Peacekeeping Force's headquarters, a space station located at Earth's L4 Lagrange point. Not many ships guard it; you always found that strange.",
+                                    False, False)

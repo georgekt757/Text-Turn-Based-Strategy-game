@@ -28,7 +28,7 @@
         "name":"Shotgun",
         "desc":"Short-range firearm loaded with buckshot rounds. Banned in most places. Deals high damage, though you may experience difficulty hitting with this weapon.",
         "atk":20,
-        "hitRoll":65,
+        "hitRoll":55,
         "ammo":5,
         "fireType":"single"
     },

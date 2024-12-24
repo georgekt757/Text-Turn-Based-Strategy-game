@@ -2,7 +2,7 @@ import json
 from random import randint
 
 from player import player, inv
-from locations import crashsite, new_hope
+from locations import crashsite, new_hope, guardian_station
 from menu import main_menu
 
 class Core:
@@ -34,6 +34,7 @@ def save():
         "name": player.get_name(),
         "hp": player.get_hp(),
         "damage": player.get_damage(),
+        "morality": player.get_morality(),
         "wpn": player.get_wpn(),
         "wpnDesc": player.get_wpnDesc(),
         "atk": player.get_atk(),
@@ -55,7 +56,11 @@ def save():
 
         "new_hope_available": new_hope.get_available(),
         "new_hope_bartender_convinced": new_hope.get_convinced(),
-        "new_hope_prospector_survived": new_hope.get_prospector_surived()
+        "new_hope_prospector_survived": new_hope.get_prospector_surived(),
+
+        "guardian_station_available": guardian_station.get_available(),
+        "guardian_station_rebels_pacified": guardian_station.get_rebels_pacified(),
+        "guardian_station_rebels_alive": guardian_station.get_rebels_alive()
     }
 
     try:
@@ -64,7 +69,7 @@ def save():
         print("Saved to this directory successfuly. You may move the file wherever you want.")
         
     except OSError as e:
-        print(f"\n\nYour data could not be saved: {e}. Your name has special characters that are invalid to your OS's file management, change it now and save again.\n")
+        print(f"\n\nYour data could not be saved: {e}. Your name may have special characters that are invalid to your OS's file management, change it now and save again, see if that helps.\n")
         player.set_name(input("New name: "))
         save()
 
@@ -75,6 +80,7 @@ def load():
         player.set_name(save_data["name"])
         player.set_hp(save_data["hp"])
         player.set_damage(save_data["damage"])
+        player.set_morality(save_data["morality"])
         player.set_wpn(save_data["wpn"])
         player.set_wpnDesc(save_data["wpnDesc"])
         player.set_atk(save_data["atk"])
@@ -92,12 +98,18 @@ def load():
         core_info.set_stage(save_data["stage"])
 
         # Location specific data
-        crashsite.set_prospector_survived(save_data["prospectors"])
+        try:
+            crashsite.set_prospector_survived(save_data["prospectors"])
 
-        new_hope.set_available(save_data["new_hope_available"])
-        new_hope.set_convinced(save_data["new_hope_bartender_convinced"])
-        new_hope.set_prospector_survived(save_data["new_hope_prospector_survived"])
+            new_hope.set_available(save_data["new_hope_available"])
+            new_hope.set_convinced(save_data["new_hope_bartender_convinced"])
+            new_hope.set_prospector_survived(save_data["new_hope_prospector_survived"])
 
+            guardian_station.set_available(save_data["guardian_station_available"])
+            guardian_station.set_rebels_pacified(save_data["guardian_station_rebels_pacified"])
+            guardian_station.set_rebels_alive(save_data["guardian_station_rebels_alive"])
+        except KeyError:
+            print("New location data has been added since you last played...")
 
     core_info.set_state("idle")
     transit(save_data["location"])
@@ -135,9 +147,9 @@ def first_load():
             elif choice == 13: # Gives players debug armour. Not listed for obvious reasons.
                 player.change_amr("dbg")
             else:
-                print("Went out of range, buddy!")
-        except ValueError as e:
-            print(f"Whoops, caught an exception here!: {e} \nMake sure your input is an integer!")
+                print("Your input was out of range. Try again!")
+        except ValueError:
+            print("Your input wasn't an integer. Make sure it is!")
     print(f"You have chosen {player.get_amr()}. {player.get_amrDesc()}")
 
     # Initiative
@@ -150,11 +162,11 @@ It should go without saying that these are highly important, just as much as arm
     # This will mimic the armour selection as they are inherently quite similar
     while player.get_wpn() == None:
         print('''
-            1. Assault Rifle - Good damage and accuracy, great magazine size
-            2. Pistol - Low damage, exceptional accuracy, good magazine size
-            3. Shotgun - Great damage, mediocre accuracy, low magazine size
-            4. Sniper Rifle - Great damage, exceptional accuracy, poor magazine size
-            5. Light Machine Gun - Exceptional damage and magazine size, poor accuracy
+    1. Assault Rifle - Good damage and accuracy, great magazine size, fully-automatic
+    2. Pistol - Low damage, exceptional accuracy, good magazine size, semi-automatic
+    3. Shotgun - Great damage, mediocre accuracy, low magazine size, semi-automatic
+    4. Sniper Rifle - Great damage, exceptional accuracy, poor magazine size, semi-automatic
+    5. Light Machine Gun - Exceptional damage and magazine size, poor accuracy, fully-automatic
             ''')
         
         try:
@@ -175,26 +187,27 @@ It should go without saying that these are highly important, just as much as arm
                 player.change_wpn("stl")
 
             else:
-                print("Went out of range, buddy. Try again!")
-        except ValueError as e:
-            print(f"Whoops, caught an exception here!: {e} \nMake sure your input is an integer!")
+                print("Your input was out of range. Try again!")
+        except ValueError:
+            print("Your input wasn't an integer. Make sure it is!")
     print(f"You have chosen the {player.get_wpn()}. {player.get_wpnDesc()}")
 
     print('''
-You are also to receive three stims, two impact grenades and one focus shot.
-Stims restore a small amount of health,
-Impact grenades deal light damage to all enemies,
+You are also to receive three healtshots, two high-impact (HI) grenades and one focus shot.
+Healtshots restore a small amount of health,
+HI grenades deal light damage to all enemies,
 and Focus Shots deal massive damage to a single enemy, but destroy themselves upon use.''')
     inv.add_SLOT1(3)
     inv.add_SLOT2(2)
     inv.add_SLOT3(1)
-
+    choice = str(input("Input anything to continue..."))
     print("\nYou have completed character creation. Good job, freelancer! Time for your mission brief...")
     print('''
 The Intragalactic Peacekeeping Force has contracted you to investigate the disappearance of one of their ships, the IPNS Whistler, a Sol-class observation ship.
 It was performing a training exercise with its crew before suddenly disappearing off radar. They have lead to conclude that the Whistler was, somehow, destroyed.
 You are to go to the crash site on Salvation, a small border colony, and assess the situation as the IPF would rather not get the public involved as of right now. Suspiscious...
 But the pay is enough to keep you going for the next three months, so regardless, you accept.''')
+    choice = str(input("Input anything to continue..."))
     
     core_info.set_state("idle")
     transit(1)
@@ -221,14 +234,21 @@ def transit(target):
 It is capable of going nearly everywhere, and allows you to perform your own analyses of situations without interruption.''')
         elif core_info.get_location() == 1: # Crash site
             print("You board your ship and leave the crash site. You can still see the fires...")
-        elif core_info.get_location() == 2:
+        elif core_info.get_location() == 2: # New Hope
             print("You board your fighter and leave New Hope. Such a pleasant town, if only it weren't dragged into this mess...")
+        elif core_info.get_location() == 3: # Guardian Station
+            print("After nearly falling asleep waiting for clearance to disconnect the space bridge, you're finally free from Guardian Station.")
 
         core_info.set_location(target)
         if target == 1: # Crash site
             crashsite.enter(core_info.get_stage())
         elif target == 2: # New Hope
             new_hope.enter(core_info.get_stage())
+        elif target == 3: # Guardian station
+            guardian_station.enter(core_info.get_stage())
+    
+    
+    
     except ValueError as e:
         print(f"Your fighter says your coordinates are invalid and returned {e}.Please try again.")
 
@@ -270,7 +290,7 @@ def perk():
             print("Your input was out of range.")
 
 def main_loop():
-    location_list = [crashsite, new_hope]
+    location_list = [crashsite, new_hope, guardian_station]
     running = True
     choice = None
     while running:
@@ -278,7 +298,7 @@ def main_loop():
 
         if loop_control == "exit":
             running = False
-            print("Thank you for playing. Have a nice day.")
+            choice = input("Thank you for playing. Have a nice day.\nInput anything to continue...")
 
         elif loop_control == "save":
             save()
@@ -310,6 +330,8 @@ def main_loop():
 
             if core_info.get_stage() >= 1:
                 new_hope.set_available(True)
+            if core_info.get_stage() >= 2:
+                guardian_station.set_available(True)
 
         elif loop_control == "player_died":
             msg = "You have been killed."
